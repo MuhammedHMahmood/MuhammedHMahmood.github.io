@@ -9,19 +9,17 @@
 </head>
 <body>
 
-  <nav class="nav-pills">
+  <nav class="nav-pills" aria-label="Site navigation">
     <a href="#work">Work</a>
     <a href="#skills">Skills</a>
     <a href="#contact">Contact</a>
   </nav>
 
-  <section class="hero" id="hero">
+  <main>
+    <section class="hero" id="hero">
     <div class="hero-inner">
       <span class="label">DevOps Engineer · AI Builder</span>
-      <h1 class="hero-name">
-        <span>Muhammed</span><br>
-        <span class="gradient-text">Mahmood</span>
-      </h1>
+      <h1 class="hero-name">Muhammed<br><span class="gradient-text">Mahmood</span></h1>
       <p class="tagline">
         Building reliable infrastructure by day, AI-powered tools by night.
         I bring DevOps discipline to the emerging AI stack.
@@ -34,17 +32,17 @@
   </section>
 
   <section class="work" id="work">
-    <span class="label">Work</span>
+    <h2 class="label">Work</h2>
     <div class="grid" id="projects-grid"></div>
   </section>
 
   <section class="skills" id="skills">
-    <span class="label">Skills</span>
+    <h2 class="label">Skills</h2>
     <div class="skills-groups" id="skills-groups"></div>
   </section>
 
   <section class="contact" id="contact">
-    <span class="label">Contact</span>
+    <h2 class="label">Contact</h2>
     <div class="contact-links">
       <a href="https://github.com/MuhammedHMahmood" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
       <a href="https://linkedin.com/in/muhammedmahmood" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
@@ -52,6 +50,7 @@
       <a href="mailto:your@email.com">Email ↗</a>
     </div>
   </section>
+  </main>
 
   <script src="projects.js"></script>
   <script src="main.js"></script>
