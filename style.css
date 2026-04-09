@@ -1,0 +1,496 @@
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root {
+  --bg-deep:        #071220;
+  --bg-card:        #0a1f3d;
+  --bg-card-open:   #0c2340;
+  --accent-teal:    #5eead4;
+  --accent-cyan:    #38bdf8;
+  --text-primary:   #ffffff;
+  --text-secondary: #94a3b8;
+  --text-muted:     #64748b;
+  --border-default: rgba(94, 234, 212, 0.15);
+  --border-active:  rgba(94, 234, 212, 0.4);
+  --gradient-accent: linear-gradient(90deg, #5eead4, #38bdf8);
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-deep);
+  color: var(--text-secondary);
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+.nav-pills {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.5rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 100;
+}
+
+.nav-pills a {
+  display: inline-block;
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--border-default);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  background: rgba(7, 18, 32, 0.7);
+  backdrop-filter: blur(8px);
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.nav-pills a:hover {
+  border-color: var(--border-active);
+  color: var(--accent-teal);
+}
+
+/* ============================================================
+   LABEL — shared by hero span and section h2 elements
+   ============================================================ */
+.label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: normal;       /* override h2 bold */
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-teal);
+  margin: 0 0 1.5rem;        /* override h2 margin */
+}
+
+/* ============================================================
+   HERO SECTION
+   ============================================================ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 6rem 2rem 4rem;
+  background-image: radial-gradient(ellipse at 70% 30%, rgba(32, 178, 170, 0.08), transparent 60%);
+}
+
+.hero-inner {
+  max-width: 700px;
+}
+
+.hero-name {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.1;
+  margin-bottom: 1.25rem;
+}
+
+.gradient-text {
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.tagline {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  max-width: 500px;
+  margin-bottom: 2rem;
+}
+
+.cta-group {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.btn-primary,
+.btn-secondary {
+  display: inline-block;
+  padding: 0.65rem 1.4rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: opacity 0.2s, transform 0.2s;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--gradient-accent);
+  color: var(--bg-deep);
+}
+
+.btn-primary:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  border: 1px solid var(--border-active);
+  color: var(--accent-teal);
+  background: transparent;
+}
+
+.btn-secondary:hover {
+  background: rgba(94, 234, 212, 0.08);
+  transform: translateY(-1px);
+}
+
+/* ============================================================
+   SECTIONS (work / skills / contact)
+   ============================================================ */
+.work,
+.skills,
+.contact {
+  padding: 5rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ============================================================
+   PROJECT GRID — outer container
+   ============================================================ */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+/* ============================================================
+   PAIR — inner grid container (2-column, fixed height)
+   ============================================================ */
+.pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  height: 180px;
+  transition:
+    grid-template-columns 1s cubic-bezier(0.4, 0, 0.2, 1),
+    gap                   1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pair.expanded-left {
+  grid-template-columns: 1fr 0px;
+  gap: 0;
+}
+
+.pair.expanded-right {
+  grid-template-columns: 0px 1fr;
+  gap: 0;
+}
+
+/* ============================================================
+   CARD
+   ============================================================ */
+.card {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  padding: 1rem 1rem 0.75rem;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.card:hover {
+  border-color: var(--border-active);
+}
+
+.card.open {
+  background: var(--bg-card-open);
+  border-color: var(--border-active);
+}
+
+/* Top gradient stripe via ::before pseudo-element */
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-accent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.card:hover::before,
+.card.open::before {
+  opacity: 1;
+}
+
+/* ============================================================
+   CARD HEADER
+   ============================================================ */
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.card-arrow {
+  flex-shrink: 0;
+  font-size: 0.875rem;
+  color: var(--accent-teal);
+  transition: transform 0.3s;
+  margin-top: 1px;
+}
+
+.card.open .card-arrow {
+  transform: rotate(45deg);
+}
+
+/* ============================================================
+   CARD TAGS
+   ============================================================ */
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.5rem;
+}
+
+.tag {
+  font-size: 0.65rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-default);
+  color: var(--text-muted);
+  background: transparent;
+  letter-spacing: 0.03em;
+}
+
+/* ============================================================
+   CARD DETAIL — 3-column grid, fades in after card opens
+   ============================================================ */
+.card-detail {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  opacity: 0;
+  transition: opacity 0.4s 0.4s; /* 0.4s delay */
+  margin-top: auto;
+  padding-top: 0.75rem;
+}
+
+.card.open .card-detail {
+  opacity: 1;
+}
+
+.detail-col h4 {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.detail-col p {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ============================================================
+   CARD HINT — fades in after card opens (longer delay)
+   ============================================================ */
+.card-hint {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: auto;
+  padding-top: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.4s 0.6s; /* 0.6s delay */
+}
+
+.card.open .card-hint {
+  opacity: 1;
+}
+
+/* ============================================================
+   CARD GITHUB LINK
+   ============================================================ */
+.card-github {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.75rem;
+  color: var(--accent-cyan);
+  margin-top: 0.5rem;
+  transition: color 0.2s;
+}
+
+.card-github:hover {
+  color: var(--accent-teal);
+}
+
+/* ============================================================
+   PLACEHOLDER — empty slot in a pair
+   ============================================================ */
+.placeholder {
+  border: 1px dashed rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  transition: opacity 0.5s;
+}
+
+.pair.expanded-left .placeholder,
+.pair.expanded-right .placeholder {
+  opacity: 0;
+}
+
+/* ============================================================
+   SKILLS
+   ============================================================ */
+.skills-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.skill-group {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.skill-group-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  min-width: 120px;
+  flex-shrink: 0;
+}
+
+.skill-tag {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-default);
+  color: var(--text-secondary);
+  background: var(--bg-card);
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.skill-tag:hover {
+  border-color: var(--border-active);
+  color: var(--accent-teal);
+}
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contact-links {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.contact-links a {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-default);
+  padding-bottom: 2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.contact-links a:hover {
+  color: var(--accent-teal);
+  border-color: var(--accent-teal);
+}
+
+/* ============================================================
+   RESPONSIVE — collapse to single column at 600px
+   ============================================================ */
+@media (max-width: 600px) {
+  .nav-pills {
+    top: auto;
+    bottom: 1.25rem;
+    right: 50%;
+    transform: translateX(50%);
+  }
+
+  .hero {
+    padding: 5rem 1.25rem 3rem;
+  }
+
+  .work,
+  .skills,
+  .contact {
+    padding: 3.5rem 1.25rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pair {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .pair.expanded-left,
+  .pair.expanded-right {
+    grid-template-columns: 1fr;
+  }
+
+  .card-detail {
+    grid-template-columns: 1fr;
+  }
+
+  .skill-group {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .skill-group-label {
+    min-width: unset;
+  }
+
+  .cta-group {
+    flex-direction: column;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    text-align: center;
+  }
+}
