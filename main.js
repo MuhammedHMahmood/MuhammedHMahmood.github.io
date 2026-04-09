@@ -5,48 +5,54 @@ const SKILLS = [
   { group: 'Teaching',      items: ['CMPE281', 'Curriculum Design', 'Lab Development'] },
 ];
 
-// Which side of the pair each project sits on (by project index 0–5)
-// Row 0 (projects 0,1): card on LEFT  → cardOnRight = false
-// Row 1 (projects 2,3): card on RIGHT → cardOnRight = true
-// Row 2 (projects 4,5): card on LEFT  → cardOnRight = false
-const CARD_ON_RIGHT = [false, false, true, true, false, false];
-
 let activeCard = null;
 let activePair = null;
+
+function esc(str) {
+  const d = document.createElement('div');
+  d.textContent = String(str);
+  return d.innerHTML;
+}
 
 function buildCard(project) {
   const card = document.createElement('div');
   card.className = 'card';
 
-  const githubLink = project.github
-    ? `<a class="card-github" href="${project.github}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">GitHub ↗</a>`
+  const safeHref = project.github?.startsWith('https://') ? project.github : null;
+  const githubLink = safeHref
+    ? `<a class="card-github" href="${safeHref}" target="_blank" rel="noopener noreferrer">GitHub ↗</a>`
     : '';
 
   card.innerHTML = `
     <div class="card-header">
-      <span class="card-title">${project.title}</span>
+      <span class="card-title">${esc(project.title)}</span>
       <span class="card-arrow">↗</span>
     </div>
     <div class="card-tags">
-      ${project.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+      ${project.tags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}
     </div>
     <div class="card-detail">
       <div class="detail-col">
         <h4>Problem</h4>
-        <p>${project.problem}</p>
+        <p>${esc(project.problem)}</p>
       </div>
       <div class="detail-col">
         <h4>How I Used AI</h4>
-        <p>${project.aiUsage}</p>
+        <p>${esc(project.aiUsage)}</p>
       </div>
       <div class="detail-col">
         <h4>Outcome</h4>
-        <p>${project.outcome}</p>
+        <p>${esc(project.outcome)}</p>
         ${githubLink}
       </div>
     </div>
     <div class="card-hint">click to close</div>
   `;
+
+  const githubAnchor = card.querySelector('.card-github');
+  if (githubAnchor) {
+    githubAnchor.addEventListener('click', e => e.stopPropagation());
+  }
 
   return card;
 }
@@ -73,10 +79,15 @@ function toggleCard(card, pair, cardOnRight) {
 }
 
 function renderGrid() {
+  if (!window.PROJECTS?.length) {
+    console.error('main.js: window.PROJECTS not found — ensure projects.js loads before main.js');
+    return;
+  }
+
   const grid = document.getElementById('projects-grid');
 
   window.PROJECTS.forEach((project, i) => {
-    const cardOnRight = CARD_ON_RIGHT[i];
+    const cardOnRight = Math.floor(i / 2) === 1;
 
     const pair = document.createElement('div');
     pair.className = 'pair';
@@ -106,8 +117,8 @@ function renderSkills() {
     const div = document.createElement('div');
     div.className = 'skill-group';
     div.innerHTML = `
-      <span class="skill-group-label">${group}</span>
-      ${items.map(item => `<span class="skill-tag">${item}</span>`).join('')}
+      <span class="skill-group-label">${esc(group)}</span>
+      ${items.map(item => `<span class="skill-tag">${esc(item)}</span>`).join('')}
     `;
     container.appendChild(div);
   });
