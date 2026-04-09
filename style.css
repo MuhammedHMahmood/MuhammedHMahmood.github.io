@@ -92,7 +92,6 @@ a {
    HERO SECTION
    ============================================================ */
 .hero {
-  min-height: 100vh;
   display: flex;
   align-items: center;
   padding: 6rem 2rem 4rem;
@@ -120,7 +119,7 @@ a {
   height: 200px;
   border-radius: 50%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center 15%;
   border: 2px solid var(--border-active);
   box-shadow: 0 0 40px rgba(94, 234, 212, 0.12);
   display: block;
