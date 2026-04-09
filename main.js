@@ -18,9 +18,13 @@ function buildCard(project) {
   const card = document.createElement('div');
   card.className = 'card';
 
-  const safeHref = project.github?.startsWith('https://') ? project.github : null;
-  const githubLink = safeHref
-    ? `<a class="card-github" href="${safeHref}" target="_blank" rel="noopener noreferrer">GitHub ↗</a>`
+  const safeGithub = project.github?.startsWith('https://') ? project.github : null;
+  const safeLive = project.live?.startsWith('https://') ? project.live : null;
+  const githubLink = safeGithub
+    ? `<a class="card-github" href="${safeGithub}" target="_blank" rel="noopener noreferrer">GitHub ↗</a>`
+    : '';
+  const liveLink = safeLive
+    ? `<a class="card-github" href="${safeLive}" target="_blank" rel="noopener noreferrer">Live ↗</a>`
     : '';
 
   card.innerHTML = `
@@ -37,22 +41,21 @@ function buildCard(project) {
         <p>${esc(project.problem)}</p>
       </div>
       <div class="detail-col">
-        <h4>How I Used AI</h4>
+        <h4>${esc(project.aiLabel || 'How I Used AI')}</h4>
         <p>${esc(project.aiUsage)}</p>
       </div>
       <div class="detail-col">
         <h4>Outcome</h4>
         <p>${esc(project.outcome)}</p>
-        ${githubLink}
+        ${liveLink}${githubLink}
       </div>
     </div>
     <div class="card-hint">click to close</div>
   `;
 
-  const githubAnchor = card.querySelector('.card-github');
-  if (githubAnchor) {
-    githubAnchor.addEventListener('click', e => e.stopPropagation());
-  }
+  card.querySelectorAll('.card-github').forEach(a => {
+    a.addEventListener('click', e => e.stopPropagation());
+  });
 
   return card;
 }
